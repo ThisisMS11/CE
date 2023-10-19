@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import Article
@@ -28,6 +29,11 @@ def article_search_view(request):
 
 # create Article
 # @csrf_exempt
+
+# only authenticated users should be able to use create a new article so use login_required decorator.
+
+# if the user is not authenticated then the user will be redirected to a 404 page not found page (default)
+@login_required
 def article_create_view(request):
 
     context ={}
