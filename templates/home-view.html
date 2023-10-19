@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+<!-- content is the name of the variable out here and can be anything including like xyz, abc  -->
+{%block content%}
+<h1>{{title}} + {{content}} </h1>
+<ul>{% for x in article_list %}
+        {% if x.title %}
+            <li><a href='/articles/{{x.id}}/'>{{x.title}} - {{x.content}} </a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{%endblock content%}
