@@ -1,5 +1,27 @@
 from django import forms
-class ArticleForm(forms.Form):
+from .models import Article
+# Model form : Model form in django simplifies the process of creating html forms by creating forms based on your database Models.For example, if you have a model with fields for a user's name, email, and age, the model form will create fields for these attributes. 
+# https://chat.openai.com/share/4eec9e38-02a1-44c8-8eb7-cc24a2eb03bd
+
+class ArticleForm(forms.ModelForm):
+    class Meta :
+        model = Article
+        # specify the fields which you want to include in your form.
+        fields = ['title','content']
+
+    def clean(self):
+        data = self.cleaned_data
+        # to determine does there already exist any Article with this title or not 
+        title = data.get('title')
+        qs = Article.objects.all().filter(title__icontains=title)
+
+        if qs.exists():
+            self.add_error('title',f"{title} has already been taken try another one")
+        return data
+
+# here we manually have to define what fields are to be present in our forms like here these are title and content.
+
+class ArticleFormOld(forms.Form):
     title= forms.CharField()
     content= forms.CharField()
 
@@ -10,7 +32,7 @@ class ArticleForm(forms.Form):
     #     print("cleaned_data : ", cleaned_data)
     #     title = cleaned_data.get('title')
 
-    #     # avoid this title
+    #     Example Error :
     #     if title.lower().strip() == "the office":
     #         raise forms.ValidationError("This title has already been taken . ")
         
