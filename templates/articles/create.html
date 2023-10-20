@@ -2,22 +2,27 @@
 
 {% block content %}
 
+<!-- our django form is here  -->
+<!-- {{form.as_p}} -->
+
 {% if not isCreated %}
 <div style="margin-top: 10px;"></div>
 <div>
+    Please sir Create your form : 
     <form action="." method="post">
-        <div>
-            {% csrf_token %}
+        {% csrf_token %}
+        <!-- <div>
             <input type="text" name="title" placeholder="Title">
             
             <div style="margin-top: 10px;">
                 <textarea name="content" placeholder="Content" cols="30" rows="10"></textarea>
             </div>
+        </div> -->
 
-            <button style="margin-top: 10px;"  type="submit">
-                Create Article
-            </button>
-        </div>
+        {{form.as_p}}
+        <button style="margin-top: 10px;"  type="submit">
+            Create Article
+        </button>
     </form>
 </div>
 {% else %}
