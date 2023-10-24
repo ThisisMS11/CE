@@ -2,10 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import dotenv
+import pathlib
 
 def main():
     """Run administrative tasks."""
+    
+    # DOT_ENV_PATH = pathlib.Path() / '.env'
+
+    # # in case we want to check for the presence of env files only when it exists , we can do something like below : 
+    # if DOT_ENV_PATH.exists():
+    #     dotenv.read_dotenv(str(DOT_ENV_PATH))
+
+    # this will find the dotenv file in case we don't find one it will not throw any errors just a warning.
+    dotenv.read_dotenv()
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "trydjango.settings")
     try:
         from django.core.management import execute_from_command_line
