@@ -257,3 +257,27 @@ DROP DATABASE db_name (from another database)
 
 > this will delete all of your database content as well informations about your users and superusers so you have to recrate them as well. 
 
+## Github clone Thing
+```
+1. Go the django project and clone it .
+
+2. git clone https://github.com/ThisisMS11/CE.git
+
+3. cd CE
+
+4. Now first recreate the virtual environment with the help of the following commands :
+    a. pyenv virtualenv environment_name
+    b. pyenv activate environment_name
+
+5. So I assume that you have successfully created your virtual environment and you do have a requirements.txt file in your django project.
+
+6. pip install -r requirements.txt
+
+7. pip list (to view the installed dependencies)
+```
+
+## Tests in Django
+To run all the tests    
+```
+python manage.py test
+```

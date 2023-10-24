@@ -2,5 +2,5 @@ trydjango/settings.py
 bin/
 lib/
 include/
-__pycache__
+*/__pycache__/
 .env
