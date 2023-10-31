@@ -1,11 +1,13 @@
 from django.db import models
 from django.db.models.signals import pre_save,post_save
 from django.utils import timezone
-from django.utils.text import slugify
+from .utils import slugify_instance_title
+
+
 # Create your models here.
 class Article(models.Model):
     title = models.CharField(max_length=120)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(unique=True,blank=True, null=True)
     content = models.TextField(default='default content')
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -20,28 +22,11 @@ class Article(models.Model):
         # only when we are defining the slug by ourselves we have to do this.
         
         # if self.slug is None :
-        #     self.slug = slugify(self.title)
+        #     self.slug = slugify(self.title)'
+                    # or
+        #     slugify_instance_title(self,save=False)
+
         super().save(*args,**kwargs)
-
-
-# https://docs.djangoproject.com/en/4.2/ref/signals/
-# sender :  The model class.
-# instance :The actual instance being saved.
-
-
-def slugify_instance_title(instance,save=False):
-    slug = slugify(instance.title)
-    qs = Article.objects.filter(slug=slug).exclude(id= instance.id)
-
-    # if similar slugs already exists then we will just save our new slug in this way so that it gets differentiated from the rest though this is not enough for now.
-    
-    if qs.exists():
-        slug = f"{slug}-{qs.count() + 1}"
-
-    instance.slug = slug
-    if save :
-        instance.save()
-    return instance
 
 
 # pre save things 
@@ -58,7 +43,7 @@ pre_save.connect(article_pre_save,sender=Article)
 
 # post save things
 def article_post_save(sender,instance,created,*args,**kwargs):
-    # print('post_save')
+    print('post_save')
     # print(args,kwargs)
     if created :
         slugify_instance_title(instance,save=True)
