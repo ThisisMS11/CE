@@ -281,3 +281,15 @@ To run all the tests
 ```
 python manage.py test
 ```
+
+## Making Changes to Models & Fields 
+Whenever you are making any changes to your existing django models and want to reflect those changes in the database for that you must create the migrations first and run migrate them to reflect the changes.
+```
+python manage.py makemigrations
+
+python manage.py migrate
+```
+! Ensure you aren't attempting to access the modified models anywhere in the views because if you are most likely to get this error :
+https://forum.djangoproject.com/t/problems-adding-database-columns/14716/15
+
+

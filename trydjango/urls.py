@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import home_view
+# from .views import home_view
 from accounts.views import (login_view,register_view,logout_view)
 from articles.views import (
     article_search_view,
@@ -27,7 +27,7 @@ from articles.views import (
 
 
 urlpatterns = [
-    path("", home_view),
+    # path("", home_view),
     # dynamic url with parameter of type integer
     path("login/",login_view),
     path("register/",register_view),
