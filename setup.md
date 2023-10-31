@@ -138,7 +138,10 @@ urlpatterns = [
 python manage.py (for commands used with "python manage.py" prefix)
 python -m django (for commands used with "python -m django" prefix)
 ```
-
+## If you want to run django code in terminal then 
+```
+python manage.py shell
+```
 ## Create a Super User
 
 In Django, a superuser is a user account with special privileges that allow them to access and manage the Django admin interface, which is a web-based tool for managing the application's data and settings. Superusers have the highest level of access and control within the Django project.
@@ -154,6 +157,8 @@ Tasks of a Super user :
 ```
 python manage.py createsuperuser
 ```
+
+
 
 ## Django Applications
 

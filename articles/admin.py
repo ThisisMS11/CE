@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import Article
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display=['id', 'title', 'timestamp', 'updated','publish']  # fields to be used to display the article
+    list_display=['id', 'title', 'timestamp', 'updated','publish','slug']  # fields to be used to display the article
     search_fields=['content'] # search artilces by matching corresponding content
 
 admin.site.register(Article,ArticleAdmin)

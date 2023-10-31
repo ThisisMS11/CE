@@ -29,6 +29,21 @@ class Article(models.Model):
 # instance :The actual instance being saved.
 
 
+def slugify_instance_title(instance,save=False):
+    slug = slugify(instance.title)
+    qs = Article.objects.filter(slug=slug).exclude(id= instance.id)
+
+    # if similar slugs already exists then we will just save our new slug in this way so that it gets differentiated from the rest though this is not enough for now.
+    
+    if qs.exists():
+        slug = f"{slug}-{qs.count() + 1}"
+
+    instance.slug = slug
+    if save :
+        instance.save()
+    return instance
+
+
 # pre save things 
 def article_pre_save(sender,instance,*args,**kwargs):
     print('pre_save')
@@ -36,7 +51,7 @@ def article_pre_save(sender,instance,*args,**kwargs):
     # print(args,kwargs)
 
     if instance.slug is None :
-            instance.slug = slugify(instance.title)
+            slugify_instance_title(instance,save=False)
 
 pre_save.connect(article_pre_save,sender=Article)
 
@@ -46,7 +61,6 @@ def article_post_save(sender,instance,created,*args,**kwargs):
     # print('post_save')
     # print(args,kwargs)
     if created :
-        instance.slug = slugify(instance.title)
-        instance.save()
+        slugify_instance_title(instance,save=True)
 
 post_save.connect(article_post_save,sender=Article)
